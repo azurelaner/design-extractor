@@ -72,7 +72,9 @@ node paleta.js https://site.com
 
 Grava em `saida/paletas/` um relatório `.md` (fundos, texto, bordas, tipografia, raio de canto, sombra e as variáveis `--token` declaradas no CSS), o mesmo em `.json` e dois prints: a primeira dobra e a página inteira.
 
-A ordem é pela **área que cada cor ocupa na tela**, não por quantas vezes ela aparece. Assim o fundo do hero ganha do cinza de 200 rótulos pequenos.
+A ordem é pela **área que cada cor ocupa na tela**, não por quantas vezes ela aparece. Assim o fundo do hero ganha do cinza de 200 rótulos pequenos. Em site onde a cor mora nas fotos e nos vídeos, a tabela diz pouco: olhe os prints.
+
+Site com popup na frente (cadastro, cookies): `CLICAR='^Fechar$' node paleta.js https://site.com`, onde o texto é o nome do botão de fechar (no PowerShell: `$env:CLICAR="^Fechar$"; node paleta.js ...`).
 
 ### `captura.js`: a página rolando de verdade
 

@@ -166,8 +166,17 @@ async function principal() {
   const navegador = await chromium.launch(opcoesDeLancamento());
   const pagina = await navegador.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
   try {
-    await pagina.goto(url, { waitUntil: "networkidle", timeout: 60000 });
+    // Loja com vídeo em loop e rastreador nunca chega a networkidle: espera o DOM e
+    // dá até 20s pra rede assentar, sem morrer se não assentar.
+    await pagina.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+    await pagina.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => {});
     await pagina.waitForTimeout(1200);
+    if (process.env.CLICAR) {
+      // Popup ou portão na frente da página: fecha antes de medir (ex.: CLICAR="^Fechar$").
+      await pagina.getByRole("button", { name: new RegExp(process.env.CLICAR, "i") }).first().click({ timeout: 6000 })
+        .then(() => pagina.waitForTimeout(1500))
+        .catch(() => console.log(`⚠️ não achei botão "${process.env.CLICAR}"; medindo com ele na frente.`));
+    }
     const dobra = path.join(pasta, `${nome}-dobra.png`);
     const inteira = path.join(pasta, `${nome}-inteira.png`);
     await pagina.screenshot({ path: dobra });
