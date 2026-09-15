@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>rodando...</title>
+<style>
+  @keyframes pulso { from { opacity: .6 } to { opacity: 1 } }
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 40px; }
+  .botao { position: relative; display: inline-block; padding: 12px 24px; border-radius: 999px;
+    background: #111; color: #fff; text-decoration: none; animation: pulso 2s infinite alternate; }
+  .botao:hover { background: #333; }
+  .botao::before { content: ""; position: absolute; inset: -4px; border-radius: inherit; border: 1px solid #111; }
+  pre { white-space: pre-wrap; background: #f4f4f4; padding: 16px; font-size: 12px; }
+</style>
+</head>
+<body>
+<a class="botao" id="alvo" href="#">Quero ver</a>
+<pre id="resultado"></pre>
+
+<!-- Self-check do picker.js: o título da aba vira PASS ou FAIL. `npm test` roda isto headless. -->
+<script src="picker.js"></script>
+<script>
+  const saida = window.__dxExtract(document.getElementById("alvo"));
+  if (window.__dxPicker) window.__dxPicker.stop();
+  const esperados = {
+    "cabeçalho": "Recrie este componente",
+    "estilo computado inline": "border-radius: 999px",
+    "estado :hover": ".botao:hover",
+    "pseudo-elemento": "::before",
+    "animação": "@keyframes pulso",
+    "tokens": "## Tokens",
+  };
+  const faltando = Object.entries(esperados).filter(([, trecho]) => !saida.includes(trecho)).map(([nome]) => nome);
+  document.title = faltando.length ? "FAIL: faltou " + faltando.join(", ") : "PASS";
+  document.getElementById("resultado").textContent = document.title + "\n\n" + saida;
+</script>
+</body>
+</html>

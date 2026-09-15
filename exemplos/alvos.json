@@ -1,0 +1,4 @@
+[
+  { "url": "https://playwright.dev", "seletor": "auto", "nome": "playwright-hero" },
+  { "url": "https://example.com", "seletor": "h1", "nome": "example-titulo" }
+]

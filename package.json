@@ -1,0 +1,13 @@
+{
+  "name": "design-extractor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Copia o design de qualquer elemento de um site num bloco pronto pra colar em agente de IA. Extensão do Chrome e scripts de linha de comando.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node teste.js"
+  },
+  "dependencies": {
+    "playwright": "^1.63.0"
+  }
+}
